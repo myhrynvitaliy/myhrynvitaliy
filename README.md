@@ -1,16 +1,21 @@
-## Hi there 👋
+# Hi 👋 I'm Vitalii
 
-<!--
-**myhrynvitaliy/myhrynvitaliy** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+💻 Junior Developer  
+🌱 Currently learning React  
+📍 Based in Ukraine  
 
-Here are some ideas to get you started:
+## 🛠 Tech Stack
+- HTML 
+- CSS 
+- JavaScript 
+- Git 
+- React (learning)
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+## 📌 Goals
+- Improve frontend skills
+- Build real projects
+- Grow as a developer
+
+## 📫 Contact
+📧 Email: myhrynvitaliy@gmail.com  
+GitHub: https://github.com/myhrynvitaliy
