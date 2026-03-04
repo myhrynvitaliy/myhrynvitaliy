@@ -1,21 +1,21 @@
-# Hi 👋 I'm Vitalii
+# Hi  I'm Vitalii
 
-💻 Junior Developer  
-🌱 Currently learning React  
-📍 Based in Ukraine  
+ Junior Developer  
+ Currently learning React  
+ Based in Ukraine  
 
-## 🛠 Tech Stack
+##  Tech Stack
 - HTML 
 - CSS 
 - JavaScript 
 - Git 
 - React (learning)
 
-## 📌 Goals
+##  Goals
 - Improve frontend skills
 - Build real projects
 - Grow as a developer
 
-## 📫 Contact
-📧 Email: myhrynvitaliy@gmail.com  
+##  Contact
+ Email: myhrynvitaliy@gmail.com  
 GitHub: https://github.com/myhrynvitaliy
