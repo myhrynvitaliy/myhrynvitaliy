@@ -1,0 +1,1376 @@
+#include <windows.h>
+#include <fstream>
+#include <iostream>
+#include <iomanip>
+#include <conio.h>
+
+void mesyac_ (int& vvod);
+void get_dimensions(float& chas, int& god, float& proc_prem, int& godyny, int& godyny_schkid, int& premiya_sch, float& pryam, int& ponad, int& do_, int& holiday);
+
+
+using namespace std;
+
+
+int main()
+{
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+
+	int godyny, godyny_schkid, ponad, do_, premiya_sch, god, holiday, mesyac;
+	float chas, vsego, pryam, premiya, oplata_god, procent_schkid, vysluga, doezd, ponad_s, do_s, podatok, profspilka, vijcoviy_zbir, zarp_sch, proc_prem, holiday_sch, prof_M;
+	float  god_1 = 0.07, god_3 = 0.1, god_5 = 0.15, god_10 = 0.2, god_15 = 0.25, god_30 = 0.3, god_;
+
+
+	int chislo;
+	cout << "1 - ввод і розрахунок зарплати: " << endl;
+	cout << "2 - вивід зарплати за потрібний місяць: " << endl;
+	cout << "3 - вивід зарплати за всі місяці: " << endl;
+	cin >> chislo;
+
+	if (chislo == 1)
+	{
+
+	mesyac_ (mesyac);
+
+	if (mesyac == 1)
+	{
+	//clrscr();
+		char character;
+        ifstream in_stream;
+        ofstream out_stream;
+
+        get_dimensions (chas, god, proc_prem, godyny, godyny_schkid, premiya_sch, pryam, ponad, do_, holiday);
+
+        if (god < 3)
+         god_  = god_1;
+            else if (god >= 3 && god < 5)
+             god_ = god_3;
+                else if (god >= 5 && god < 10)
+                 god_ = god_5;
+                    else if (god >= 10 && god < 15)
+                     god_ = god_10;
+                        else if (god >= 15 && god < 30)
+                         god_  = god_15;
+                            else if (god >= 30 && god < 40)
+                             god_ = god_30;
+
+            oplata_god = godyny * chas;
+            procent_schkid = chas * godyny_schkid * 0.12;
+            vysluga = chas * godyny * god_; //(год = 7%); (три = 10%);
+            //(пьять = 15%); (десять = 20%); (пьятнадцать = 25%);(30 = 30%);
+            doezd = chas * pryam;
+            ponad_s = ponad * 75;
+            do_s = do_ * 37.50;
+            holiday_sch = holiday * (chas * 2);
+            prof_M = oplata_god * 0.24;
+            premiya = (premiya_sch * chas) * (proc_prem / 100);
+            vsego = oplata_god + procent_schkid + vysluga + doezd + ponad_s + do_s + premiya  + prof_M + holiday_sch;
+
+            vijcoviy_zbir = vsego * 0.015;
+            profspilka = (vsego - ponad_s - do_s) * 0.01;//50 - мед. страх.
+            podatok = vsego * 0.18;
+            zarp_sch = vsego - podatok - profspilka;
+
+
+
+            out_stream.open("yanvar.txt");
+
+            out_stream << setw(43) << " Години " << setw(12) << " Сума " << endl;
+            out_stream << "Оплата почасовикiв: " << setw(20) << godyny << setw(16) << oplata_god << endl;
+            out_stream << "Процент за шкiдливi умови працi: " << setw(7) << godyny_schkid << setw(16) << procent_schkid << endl;
+            out_stream << "Разовi випл. за вислугу: " << setw(15) << godyny << setw(16) << vysluga << endl;
+            out_stream << "Премiя почасовикам: " << setw(20) << premiya_sch << setw(16) << premiya << endl;
+            out_stream << "Прямування вiд мiсця: " << setw(17) << pryam << setw(15) << doezd << endl;
+            out_stream << "Розїздні понад 12 год.: " << setw(14) << ponad << " днiв" << setw(9) << ponad_s << endl;
+            out_stream << "Розїздні до 12 год.:" << setw(18) << do_ << " днiв" << setw(11) << do_s << endl;
+            out_stream << "Профмайстерність:" << setw(27) <<  " 24 від." << setw(12) << prof_M << endl;
+            out_stream << "Вихід у вихідні:" << setw(23) << holiday << " годин" << setw(11) << holiday_sch << endl << endl;
+
+            out_stream << "ВСЁГО НАРАХОВАНО: " << vsego << endl << endl;
+
+
+            out_stream << "Вираховано: " << setw(42) << "Сума" << endl;
+            out_stream << "Податок 18%: " << setw(42) << podatok << endl;
+            out_stream << "Профспiлковий внесок: " << setw(33) << profspilka << endl;
+            out_stream << "Військовий збір:" << setw(39) << vijcoviy_zbir << endl;
+
+            out_stream << "ЗАРПЛАТА ДО СПЛАТИ: " << zarp_sch << endl << endl;
+
+            out_stream.close();
+
+            in_stream.open( "yanvar.txt" );
+            in_stream.get( character );
+
+           while ( !in_stream.eof() )
+           {
+                cout << character;
+                in_stream.get(character);
+                }
+             in_stream.close();
+
+            }
+
+//	else
+//		cout << "не верный ввод";
+
+
+	else if (mesyac == 2)
+	{
+
+	//clrscr();
+		char character;
+        ifstream in_stream;
+        ofstream out_stream;
+
+        get_dimensions (chas, god, proc_prem, godyny, godyny_schkid, premiya_sch, pryam, ponad, do_, holiday);
+
+        if (god < 3)
+         god_  = god_1;
+            else if (god >= 3 && god < 5)
+             god_ = god_3;
+                else if (god >= 5 && god < 10)
+                 god_ = god_5;
+                    else if (god >= 10 && god < 15)
+                     god_ = god_10;
+                        else if (god >= 15 && god < 30)
+                         god_  = god_15;
+                            else if (god >= 30 && god < 40)
+                             god_ = god_30;
+
+            oplata_god = godyny * chas;
+            procent_schkid = chas * godyny_schkid * 0.12;
+            vysluga = chas * godyny * god_; //(год = 7%); (три = 10%);
+            //(пьять = 15%); (десять = 20%); (пьятнадцать = 25%);(30 = 30%);
+            doezd = chas * pryam;
+            ponad_s = ponad * 75;
+            do_s = do_ * 37.50;
+            holiday_sch = holiday * (chas * 2);
+            prof_M = oplata_god * 0.24;
+            premiya = (premiya_sch * chas) * (proc_prem / 100);
+            vsego = oplata_god + procent_schkid + vysluga + doezd + ponad_s + do_s + premiya  + prof_M + holiday_sch;
+
+            vijcoviy_zbir = vsego * 0.015;
+            profspilka = (vsego - ponad_s - do_s) * 0.01;//50 - мед. страх.
+            podatok = vsego * 0.18;
+            zarp_sch = vsego - podatok - profspilka;
+
+
+
+            out_stream.open("fevral.txt");
+
+            out_stream << setw(43) << " Години " << setw(12) << " Сума " << endl;
+            out_stream << "Оплата почасовикiв: " << setw(20) << godyny << setw(16) << oplata_god << endl;
+            out_stream << "Процент за шкiдливi умови працi: " << setw(7) << godyny_schkid << setw(16) << procent_schkid << endl;
+            out_stream << "Разовi випл. за вислугу: " << setw(15) << godyny << setw(16) << vysluga << endl;
+            out_stream << "Премiя почасовикам: " << setw(20) << premiya_sch << setw(16) << premiya << endl;
+            out_stream << "Прямування вiд мiсця: " << setw(17) << pryam << setw(15) << doezd << endl;
+            out_stream << "Розїздні понад 12 год.: " << setw(14) << ponad << " днiв" << setw(9) << ponad_s << endl;
+            out_stream << "Розїздні до 12 год.:" << setw(18) << do_ << " днiв" << setw(11) << do_s << endl;
+            out_stream << "Профмайстерність:" << setw(27) <<  " 24 від." << setw(12) << prof_M << endl;
+            out_stream << "Вихід у вихідні:" << setw(23) << holiday << " годин" << setw(11) << holiday_sch << endl << endl;
+
+            out_stream << "ВСЁГО НАРАХОВАНО: " << vsego << endl << endl;
+
+
+            out_stream << "Вираховано: " << setw(42) << "Сума" << endl;
+            out_stream << "Податок 18%: " << setw(42) << podatok << endl;
+            out_stream << "Профспiлковий внесок: " << setw(33) << profspilka << endl;
+            out_stream << "Військовий збір:" << setw(39) << vijcoviy_zbir << endl;
+
+            out_stream << "ЗАРПЛАТА ДО СПЛАТИ: " << zarp_sch << endl << endl;
+
+            out_stream.close();
+
+            in_stream.open( "fevral.txt" );
+            in_stream.get( character );
+
+           while ( !in_stream.eof() )
+           {
+                cout << character;
+                in_stream.get(character);
+                }
+             in_stream.close();
+
+            }
+
+
+    else if (mesyac == 3)
+	{
+
+	//clrscr();
+		char character;
+        ifstream in_stream;
+        ofstream out_stream;
+
+        get_dimensions (chas, god, proc_prem, godyny, godyny_schkid, premiya_sch, pryam, ponad, do_, holiday);
+
+        if (god < 3)
+         god_  = god_1;
+            else if (god >= 3 && god < 5)
+             god_ = god_3;
+                else if (god >= 5 && god < 10)
+                 god_ = god_5;
+                    else if (god >= 10 && god < 15)
+                     god_ = god_10;
+                        else if (god >= 15 && god < 30)
+                         god_  = god_15;
+                            else if (god >= 30 && god < 40)
+                             god_ = god_30;
+
+            oplata_god = godyny * chas;
+            procent_schkid = chas * godyny_schkid * 0.12;
+            vysluga = chas * godyny * god_; //(год = 7%); (три = 10%);
+            //(пьять = 15%); (десять = 20%); (пьятнадцать = 25%);(30 = 30%);
+            doezd = chas * pryam;
+            ponad_s = ponad * 75;
+            do_s = do_ * 37.50;
+            holiday_sch = holiday * (chas * 2);
+            prof_M = oplata_god * 0.24;
+            premiya = (premiya_sch * chas) * (proc_prem / 100);
+            vsego = oplata_god + procent_schkid + vysluga + doezd + ponad_s + do_s + premiya  + prof_M + holiday_sch;
+
+            vijcoviy_zbir = vsego * 0.015;
+            profspilka = (vsego - ponad_s - do_s) * 0.01;//50 - мед. страх.
+            podatok = vsego * 0.18;
+            zarp_sch = vsego - podatok - profspilka;
+
+
+
+            out_stream.open("mart.txt");
+
+            out_stream << setw(43) << " Години " << setw(12) << " Сума " << endl;
+            out_stream << "Оплата почасовикiв: " << setw(20) << godyny << setw(16) << oplata_god << endl;
+            out_stream << "Процент за шкiдливi умови працi: " << setw(7) << godyny_schkid << setw(16) << procent_schkid << endl;
+            out_stream << "Разовi випл. за вислугу: " << setw(15) << godyny << setw(16) << vysluga << endl;
+            out_stream << "Премiя почасовикам: " << setw(20) << premiya_sch << setw(16) << premiya << endl;
+            out_stream << "Прямування вiд мiсця: " << setw(17) << pryam << setw(15) << doezd << endl;
+            out_stream << "Розїздні понад 12 год.: " << setw(14) << ponad << " днiв" << setw(9) << ponad_s << endl;
+            out_stream << "Розїздні до 12 год.:" << setw(18) << do_ << " днiв" << setw(11) << do_s << endl;
+            out_stream << "Профмайстерність:" << setw(27) <<  " 24 від." << setw(12) << prof_M << endl;
+            out_stream << "Вихід у вихідні:" << setw(23) << holiday << " годин" << setw(11) << holiday_sch << endl << endl;
+
+            out_stream << "ВСЁГО НАРАХОВАНО: " << vsego << endl << endl;
+
+
+            out_stream << "Вираховано: " << setw(42) << "Сума" << endl;
+            out_stream << "Податок 18%: " << setw(42) << podatok << endl;
+            out_stream << "Профспiлковий внесок: " << setw(33) << profspilka << endl;
+            out_stream << "Військовий збір:" << setw(39) << vijcoviy_zbir << endl;
+
+            out_stream << "ЗАРПЛАТА ДО СПЛАТИ: " << zarp_sch << endl << endl;
+
+            out_stream.close();
+
+            in_stream.open( "mart.txt" );
+            in_stream.get( character );
+
+           while ( !in_stream.eof() )
+           {
+                cout << character;
+                in_stream.get(character);
+                }
+             in_stream.close();
+
+            }
+
+    else if (mesyac == 4)
+	{
+
+	//clrscr();
+		char character;
+        ifstream in_stream;
+        ofstream out_stream;
+
+        get_dimensions (chas, god, proc_prem, godyny, godyny_schkid, premiya_sch, pryam, ponad, do_, holiday);
+
+        if (god < 3)
+         god_  = god_1;
+            else if (god >= 3 && god < 5)
+             god_ = god_3;
+                else if (god >= 5 && god < 10)
+                 god_ = god_5;
+                    else if (god >= 10 && god < 15)
+                     god_ = god_10;
+                        else if (god >= 15 && god < 30)
+                         god_  = god_15;
+                            else if (god >= 30 && god < 40)
+                             god_ = god_30;
+
+            oplata_god = godyny * chas;
+            procent_schkid = chas * godyny_schkid * 0.12;
+            vysluga = chas * godyny * god_; //(год = 7%); (три = 10%);
+            //(пьять = 15%); (десять = 20%); (пьятнадцать = 25%);(30 = 30%);
+            doezd = chas * pryam;
+            ponad_s = ponad * 75;
+            do_s = do_ * 37.50;
+            holiday_sch = holiday * (chas * 2);
+            prof_M = oplata_god * 0.24;
+            premiya = (premiya_sch * chas) * (proc_prem / 100);
+            vsego = oplata_god + procent_schkid + vysluga + doezd + ponad_s + do_s + premiya  + prof_M + holiday_sch;
+
+            vijcoviy_zbir = vsego * 0.015;
+            profspilka = (vsego - ponad_s - do_s) * 0.01;//50 - мед. страх.
+            podatok = vsego * 0.18;
+            zarp_sch = vsego - podatok - profspilka;
+
+
+
+            out_stream.open("aprel.txt");
+
+            out_stream << setw(43) << " Години " << setw(12) << " Сума " << endl;
+            out_stream << "Оплата почасовикiв: " << setw(20) << godyny << setw(16) << oplata_god << endl;
+            out_stream << "Процент за шкiдливi умови працi: " << setw(7) << godyny_schkid << setw(16) << procent_schkid << endl;
+            out_stream << "Разовi випл. за вислугу: " << setw(15) << godyny << setw(16) << vysluga << endl;
+            out_stream << "Премiя почасовикам: " << setw(20) << premiya_sch << setw(16) << premiya << endl;
+            out_stream << "Прямування вiд мiсця: " << setw(17) << pryam << setw(15) << doezd << endl;
+            out_stream << "Розїздні понад 12 год.: " << setw(14) << ponad << " днiв" << setw(9) << ponad_s << endl;
+            out_stream << "Розїздні до 12 год.:" << setw(18) << do_ << " днiв" << setw(11) << do_s << endl;
+            out_stream << "Профмайстерність:" << setw(27) <<  " 24 від." << setw(12) << prof_M << endl;
+            out_stream << "Вихід у вихідні:" << setw(23) << holiday << " годин" << setw(11) << holiday_sch << endl << endl;
+
+            out_stream << "ВСЁГО НАРАХОВАНО: " << vsego << endl << endl;
+
+
+            out_stream << "Вираховано: " << setw(42) << "Сума" << endl;
+            out_stream << "Податок 18%: " << setw(42) << podatok << endl;
+            out_stream << "Профспiлковий внесок: " << setw(33) << profspilka << endl;
+            out_stream << "Військовий збір:" << setw(39) << vijcoviy_zbir << endl;
+
+            out_stream << "ЗАРПЛАТА ДО СПЛАТИ: " << zarp_sch << endl << endl;
+
+            out_stream.close();
+
+            in_stream.open( "aprel.txt" );
+            in_stream.get( character );
+
+           while ( !in_stream.eof() )
+           {
+                cout << character;
+                in_stream.get(character);
+                }
+             in_stream.close();
+
+            }
+
+    else if (mesyac == 5)
+	{
+
+	//clrscr();
+		char character;
+        ifstream in_stream;
+        ofstream out_stream;
+
+        get_dimensions (chas, god, proc_prem, godyny, godyny_schkid, premiya_sch, pryam, ponad, do_, holiday);
+
+        if (god < 3)
+         god_  = god_1;
+            else if (god >= 3 && god < 5)
+             god_ = god_3;
+                else if (god >= 5 && god < 10)
+                 god_ = god_5;
+                    else if (god >= 10 && god < 15)
+                     god_ = god_10;
+                        else if (god >= 15 && god < 30)
+                         god_  = god_15;
+                            else if (god >= 30 && god < 40)
+                             god_ = god_30;
+
+            oplata_god = godyny * chas;
+            procent_schkid = chas * godyny_schkid * 0.12;
+            vysluga = chas * godyny * god_; //(год = 7%); (три = 10%);
+            //(пьять = 15%); (десять = 20%); (пьятнадцать = 25%);(30 = 30%);
+            doezd = chas * pryam;
+            ponad_s = ponad * 75;
+            do_s = do_ * 37.50;
+            holiday_sch = holiday * (chas * 2);
+            prof_M = oplata_god * 0.24;
+            premiya = (premiya_sch * chas) * (proc_prem / 100);
+            vsego = oplata_god + procent_schkid + vysluga + doezd + ponad_s + do_s + premiya  + prof_M + holiday_sch;
+
+            vijcoviy_zbir = vsego * 0.015;
+            profspilka = (vsego - ponad_s - do_s) * 0.01;//50 - мед. страх.
+            podatok = vsego * 0.18;
+            zarp_sch = vsego - podatok - profspilka;
+
+
+
+            out_stream.open("may.txt");
+
+            out_stream << setw(43) << " Години " << setw(12) << " Сума " << endl;
+            out_stream << "Оплата почасовикiв: " << setw(20) << godyny << setw(16) << oplata_god << endl;
+            out_stream << "Процент за шкiдливi умови працi: " << setw(7) << godyny_schkid << setw(16) << procent_schkid << endl;
+            out_stream << "Разовi випл. за вислугу: " << setw(15) << godyny << setw(16) << vysluga << endl;
+            out_stream << "Премiя почасовикам: " << setw(20) << premiya_sch << setw(16) << premiya << endl;
+            out_stream << "Прямування вiд мiсця: " << setw(17) << pryam << setw(15) << doezd << endl;
+            out_stream << "Розїздні понад 12 год.: " << setw(14) << ponad << " днiв" << setw(9) << ponad_s << endl;
+            out_stream << "Розїздні до 12 год.:" << setw(18) << do_ << " днiв" << setw(11) << do_s << endl;
+            out_stream << "Профмайстерність:" << setw(27) <<  " 24 від." << setw(12) << prof_M << endl;
+            out_stream << "Вихід у вихідні:" << setw(23) << holiday << " годин" << setw(11) << holiday_sch << endl << endl;
+
+            out_stream << "ВСЁГО НАРАХОВАНО: " << vsego << endl << endl;
+
+
+            out_stream << "Вираховано: " << setw(42) << "Сума" << endl;
+            out_stream << "Податок 18%: " << setw(42) << podatok << endl;
+            out_stream << "Профспiлковий внесок: " << setw(33) << profspilka << endl;
+            out_stream << "Військовий збір:" << setw(39) << vijcoviy_zbir << endl;
+
+            out_stream << "ЗАРПЛАТА ДО СПЛАТИ: " << zarp_sch << endl << endl;
+
+            out_stream.close();
+
+            in_stream.open( "may.txt" );
+            in_stream.get( character );
+
+           while ( !in_stream.eof() )
+           {
+                cout << character;
+                in_stream.get(character);
+                }
+             in_stream.close();
+
+            }
+
+    else if (mesyac == 6)
+	{
+
+	//clrscr();
+		char character;
+        ifstream in_stream;
+        ofstream out_stream;
+
+        get_dimensions (chas, god, proc_prem, godyny, godyny_schkid, premiya_sch, pryam, ponad, do_, holiday);
+
+        if (god < 3)
+         god_  = god_1;
+            else if (god >= 3 && god < 5)
+             god_ = god_3;
+                else if (god >= 5 && god < 10)
+                 god_ = god_5;
+                    else if (god >= 10 && god < 15)
+                     god_ = god_10;
+                        else if (god >= 15 && god < 30)
+                         god_  = god_15;
+                            else if (god >= 30 && god < 40)
+                             god_ = god_30;
+
+            oplata_god = godyny * chas;
+            procent_schkid = chas * godyny_schkid * 0.12;
+            vysluga = chas * godyny * god_; //(год = 7%); (три = 10%);
+            //(пьять = 15%); (десять = 20%); (пьятнадцать = 25%);(30 = 30%);
+            doezd = chas * pryam;
+            ponad_s = ponad * 75;
+            do_s = do_ * 37.50;
+            holiday_sch = holiday * (chas * 2);
+            prof_M = oplata_god * 0.24;
+            premiya = (premiya_sch * chas) * (proc_prem / 100);
+            vsego = oplata_god + procent_schkid + vysluga + doezd + ponad_s + do_s + premiya  + prof_M + holiday_sch;
+
+            vijcoviy_zbir = vsego * 0.015;
+            profspilka = (vsego - ponad_s - do_s) * 0.01;//50 - мед. страх.
+            podatok = vsego * 0.18;
+            zarp_sch = vsego - podatok - profspilka;
+
+
+
+            out_stream.open("iyun.txt");
+
+            out_stream << setw(43) << " Години " << setw(12) << " Сума " << endl;
+            out_stream << "Оплата почасовикiв: " << setw(20) << godyny << setw(16) << oplata_god << endl;
+            out_stream << "Процент за шкiдливi умови працi: " << setw(7) << godyny_schkid << setw(16) << procent_schkid << endl;
+            out_stream << "Разовi випл. за вислугу: " << setw(15) << godyny << setw(16) << vysluga << endl;
+            out_stream << "Премiя почасовикам: " << setw(20) << premiya_sch << setw(16) << premiya << endl;
+            out_stream << "Прямування вiд мiсця: " << setw(17) << pryam << setw(15) << doezd << endl;
+            out_stream << "Розїздні понад 12 год.: " << setw(14) << ponad << " днiв" << setw(9) << ponad_s << endl;
+            out_stream << "Розїздні до 12 год.:" << setw(18) << do_ << " днiв" << setw(11) << do_s << endl;
+            out_stream << "Профмайстерність:" << setw(27) <<  " 24 від." << setw(12) << prof_M << endl;
+            out_stream << "Вихід у вихідні:" << setw(23) << holiday << " годин" << setw(11) << holiday_sch << endl << endl;
+
+            out_stream << "ВСЁГО НАРАХОВАНО: " << vsego << endl << endl;
+
+
+            out_stream << "Вираховано: " << setw(42) << "Сума" << endl;
+            out_stream << "Податок 18%: " << setw(42) << podatok << endl;
+            out_stream << "Профспiлковий внесок: " << setw(33) << profspilka << endl;
+            out_stream << "Військовий збір:" << setw(39) << vijcoviy_zbir << endl;
+
+            out_stream << "ЗАРПЛАТА ДО СПЛАТИ: " << zarp_sch << endl << endl;
+
+            out_stream.close();
+
+            in_stream.open( "iyun.txt" );
+            in_stream.get( character );
+
+           while ( !in_stream.eof() )
+           {
+                cout << character;
+                in_stream.get(character);
+                }
+             in_stream.close();
+
+            }
+
+    else if (mesyac == 7)
+	{
+
+	//clrscr();
+		char character;
+        ifstream in_stream;
+        ofstream out_stream;
+
+        get_dimensions (chas, god, proc_prem, godyny, godyny_schkid, premiya_sch, pryam, ponad, do_, holiday);
+
+        if (god < 3)
+         god_  = god_1;
+            else if (god >= 3 && god < 5)
+             god_ = god_3;
+                else if (god >= 5 && god < 10)
+                 god_ = god_5;
+                    else if (god >= 10 && god < 15)
+                     god_ = god_10;
+                        else if (god >= 15 && god < 30)
+                         god_  = god_15;
+                            else if (god >= 30 && god < 40)
+                             god_ = god_30;
+
+            oplata_god = godyny * chas;
+            procent_schkid = chas * godyny_schkid * 0.12;
+            vysluga = chas * godyny * god_; //(год = 7%); (три = 10%);
+            //(пьять = 15%); (десять = 20%); (пьятнадцать = 25%);(30 = 30%);
+            doezd = chas * pryam;
+            ponad_s = ponad * 75;
+            do_s = do_ * 37.50;
+            holiday_sch = holiday * (chas * 2);
+            prof_M = oplata_god * 0.24;
+            premiya = (premiya_sch * chas) * (proc_prem / 100);
+            vsego = oplata_god + procent_schkid + vysluga + doezd + ponad_s + do_s + premiya  + prof_M + holiday_sch;
+
+            vijcoviy_zbir = vsego * 0.015;
+            profspilka = (vsego - ponad_s - do_s) * 0.01;//50 - мед. страх.
+            podatok = vsego * 0.18;
+            zarp_sch = vsego - podatok - profspilka;
+
+
+
+            out_stream.open("iyul.txt");
+
+            out_stream << setw(43) << " Години " << setw(12) << " Сума " << endl;
+            out_stream << "Оплата почасовикiв: " << setw(20) << godyny << setw(16) << oplata_god << endl;
+            out_stream << "Процент за шкiдливi умови працi: " << setw(7) << godyny_schkid << setw(16) << procent_schkid << endl;
+            out_stream << "Разовi випл. за вислугу: " << setw(15) << godyny << setw(16) << vysluga << endl;
+            out_stream << "Премiя почасовикам: " << setw(20) << premiya_sch << setw(16) << premiya << endl;
+            out_stream << "Прямування вiд мiсця: " << setw(17) << pryam << setw(15) << doezd << endl;
+            out_stream << "Розїздні понад 12 год.: " << setw(14) << ponad << " днiв" << setw(9) << ponad_s << endl;
+            out_stream << "Розїздні до 12 год.:" << setw(18) << do_ << " днiв" << setw(11) << do_s << endl;
+            out_stream << "Профмайстерність:" << setw(27) <<  " 24 від." << setw(12) << prof_M << endl;
+            out_stream << "Вихід у вихідні:" << setw(23) << holiday << " годин" << setw(11) << holiday_sch << endl << endl;
+
+            out_stream << "ВСЁГО НАРАХОВАНО: " << vsego << endl << endl;
+
+
+            out_stream << "Вираховано: " << setw(42) << "Сума" << endl;
+            out_stream << "Податок 18%: " << setw(42) << podatok << endl;
+            out_stream << "Профспiлковий внесок: " << setw(33) << profspilka << endl;
+            out_stream << "Військовий збір:" << setw(39) << vijcoviy_zbir << endl;
+
+            out_stream << "ЗАРПЛАТА ДО СПЛАТИ: " << zarp_sch << endl << endl;
+
+            out_stream.close();
+
+            in_stream.open( "iyul.txt" );
+            in_stream.get( character );
+
+           while ( !in_stream.eof() )
+           {
+                cout << character;
+                in_stream.get(character);
+                }
+             in_stream.close();
+
+            }
+    else if (mesyac == 8)
+	{
+
+	//clrscr();
+		char character;
+        ifstream in_stream;
+        ofstream out_stream;
+
+        get_dimensions (chas, god, proc_prem, godyny, godyny_schkid, premiya_sch, pryam, ponad, do_, holiday);
+
+        if (god < 3)
+         god_  = god_1;
+            else if (god >= 3 && god < 5)
+             god_ = god_3;
+                else if (god >= 5 && god < 10)
+                 god_ = god_5;
+                    else if (god >= 10 && god < 15)
+                     god_ = god_10;
+                        else if (god >= 15 && god < 30)
+                         god_  = god_15;
+                            else if (god >= 30 && god < 40)
+                             god_ = god_30;
+
+            oplata_god = godyny * chas;
+            procent_schkid = chas * godyny_schkid * 0.12;
+            vysluga = chas * godyny * god_; //(год = 7%); (три = 10%);
+            //(пьять = 15%); (десять = 20%); (пьятнадцать = 25%);(30 = 30%);
+            doezd = chas * pryam;
+            ponad_s = ponad * 75;
+            do_s = do_ * 37.50;
+            holiday_sch = holiday * (chas * 2);
+            prof_M = oplata_god * 0.24;
+            premiya = (premiya_sch * chas) * (proc_prem / 100);
+            vsego = oplata_god + procent_schkid + vysluga + doezd + ponad_s + do_s + premiya  + prof_M + holiday_sch;
+
+            vijcoviy_zbir = vsego * 0.015;
+            profspilka = (vsego - ponad_s - do_s) * 0.01;//50 - мед. страх.
+            podatok = vsego * 0.18;
+            zarp_sch = vsego - podatok - profspilka;
+
+
+
+            out_stream.open("avgust.txt");
+
+            out_stream << setw(43) << " Години " << setw(12) << " Сума " << endl;
+            out_stream << "Оплата почасовикiв: " << setw(20) << godyny << setw(16) << oplata_god << endl;
+            out_stream << "Процент за шкiдливi умови працi: " << setw(7) << godyny_schkid << setw(16) << procent_schkid << endl;
+            out_stream << "Разовi випл. за вислугу: " << setw(15) << godyny << setw(16) << vysluga << endl;
+            out_stream << "Премiя почасовикам: " << setw(20) << premiya_sch << setw(16) << premiya << endl;
+            out_stream << "Прямування вiд мiсця: " << setw(17) << pryam << setw(15) << doezd << endl;
+            out_stream << "Розїздні понад 12 год.: " << setw(14) << ponad << " днiв" << setw(9) << ponad_s << endl;
+            out_stream << "Розїздні до 12 год.:" << setw(18) << do_ << " днiв" << setw(11) << do_s << endl;
+            out_stream << "Профмайстерність:" << setw(27) <<  " 24 від." << setw(12) << prof_M << endl;
+            out_stream << "Вихід у вихідні:" << setw(23) << holiday << " годин" << setw(11) << holiday_sch << endl << endl;
+
+            out_stream << "ВСЁГО НАРАХОВАНО: " << vsego << endl << endl;
+
+
+            out_stream << "Вираховано: " << setw(42) << "Сума" << endl;
+            out_stream << "Податок 18%: " << setw(42) << podatok << endl;
+            out_stream << "Профспiлковий внесок: " << setw(33) << profspilka << endl;
+            out_stream << "Військовий збір:" << setw(39) << vijcoviy_zbir << endl;
+
+            out_stream << "ЗАРПЛАТА ДО СПЛАТИ: " << zarp_sch << endl << endl;
+
+            out_stream.close();
+
+            in_stream.open( "avgust.txt" );
+            in_stream.get( character );
+
+           while ( !in_stream.eof() )
+           {
+                cout << character;
+                in_stream.get(character);
+                }
+             in_stream.close();
+
+            }
+
+    else if (mesyac == 9)
+	{
+
+	//clrscr();
+		char character;
+        ifstream in_stream;
+        ofstream out_stream;
+
+        get_dimensions (chas, god, proc_prem, godyny, godyny_schkid, premiya_sch, pryam, ponad, do_, holiday);
+
+        if (god < 3)
+         god_  = god_1;
+            else if (god >= 3 && god < 5)
+             god_ = god_3;
+                else if (god >= 5 && god < 10)
+                 god_ = god_5;
+                    else if (god >= 10 && god < 15)
+                     god_ = god_10;
+                        else if (god >= 15 && god < 30)
+                         god_  = god_15;
+                            else if (god >= 30 && god < 40)
+                             god_ = god_30;
+
+            oplata_god = godyny * chas;
+            procent_schkid = chas * godyny_schkid * 0.12;
+            vysluga = chas * godyny * god_; //(год = 7%); (три = 10%);
+            //(пьять = 15%); (десять = 20%); (пьятнадцать = 25%);(30 = 30%);
+            doezd = chas * pryam;
+            ponad_s = ponad * 75;
+            do_s = do_ * 37.50;
+            holiday_sch = holiday * (chas * 2);
+            prof_M = oplata_god * 0.24;
+            premiya = (premiya_sch * chas) * (proc_prem / 100);
+            vsego = oplata_god + procent_schkid + vysluga + doezd + ponad_s + do_s + premiya  + prof_M + holiday_sch;
+
+            vijcoviy_zbir = vsego * 0.015;
+            profspilka = (vsego - ponad_s - do_s) * 0.01;//50 - мед. страх.
+            podatok = vsego * 0.18;
+            zarp_sch = vsego - podatok - profspilka;
+
+
+
+            out_stream.open("sentyubr.txt");
+
+            out_stream << setw(43) << " Години " << setw(12) << " Сума " << endl;
+            out_stream << "Оплата почасовикiв: " << setw(20) << godyny << setw(16) << oplata_god << endl;
+            out_stream << "Процент за шкiдливi умови працi: " << setw(7) << godyny_schkid << setw(16) << procent_schkid << endl;
+            out_stream << "Разовi випл. за вислугу: " << setw(15) << godyny << setw(16) << vysluga << endl;
+            out_stream << "Премiя почасовикам: " << setw(20) << premiya_sch << setw(16) << premiya << endl;
+            out_stream << "Прямування вiд мiсця: " << setw(17) << pryam << setw(15) << doezd << endl;
+            out_stream << "Розїздні понад 12 год.: " << setw(14) << ponad << " днiв" << setw(9) << ponad_s << endl;
+            out_stream << "Розїздні до 12 год.:" << setw(18) << do_ << " днiв" << setw(11) << do_s << endl;
+            out_stream << "Профмайстерність:" << setw(27) <<  " 24 від." << setw(12) << prof_M << endl;
+            out_stream << "Вихід у вихідні:" << setw(23) << holiday << " годин" << setw(11) << holiday_sch << endl << endl;
+
+            out_stream << "ВСЁГО НАРАХОВАНО: " << vsego << endl << endl;
+
+
+            out_stream << "Вираховано: " << setw(42) << "Сума" << endl;
+            out_stream << "Податок 18%: " << setw(42) << podatok << endl;
+            out_stream << "Профспiлковий внесок: " << setw(33) << profspilka << endl;
+            out_stream << "Військовий збір:" << setw(39) << vijcoviy_zbir << endl;
+
+            out_stream << "ЗАРПЛАТА ДО СПЛАТИ: " << zarp_sch << endl << endl;
+
+            out_stream.close();
+
+            in_stream.open( "sentyubr.txt" );
+            in_stream.get( character );
+
+           while ( !in_stream.eof() )
+           {
+                cout << character;
+                in_stream.get(character);
+                }
+             in_stream.close();
+
+            }
+
+    else if (mesyac == 10)
+	{
+
+	//clrscr();
+		char character;
+        ifstream in_stream;
+        ofstream out_stream;
+
+        get_dimensions (chas, god, proc_prem, godyny, godyny_schkid, premiya_sch, pryam, ponad, do_, holiday);
+
+        if (god < 3)
+         god_  = god_1;
+            else if (god >= 3 && god < 5)
+             god_ = god_3;
+                else if (god >= 5 && god < 10)
+                 god_ = god_5;
+                    else if (god >= 10 && god < 15)
+                     god_ = god_10;
+                        else if (god >= 15 && god < 30)
+                         god_  = god_15;
+                            else if (god >= 30 && god < 40)
+                             god_ = god_30;
+
+            oplata_god = godyny * chas;
+            procent_schkid = chas * godyny_schkid * 0.12;
+            vysluga = chas * godyny * god_; //(год = 7%); (три = 10%);
+            //(пьять = 15%); (десять = 20%); (пьятнадцать = 25%);(30 = 30%);
+            doezd = chas * pryam;
+            ponad_s = ponad * 75;
+            do_s = do_ * 37.50;
+            holiday_sch = holiday * (chas * 2);
+            prof_M = oplata_god * 0.24;
+            premiya = (premiya_sch * chas) * (proc_prem / 100);
+            vsego = oplata_god + procent_schkid + vysluga + doezd + ponad_s + do_s + premiya  + prof_M + holiday_sch;
+
+            vijcoviy_zbir = vsego * 0.015;
+            profspilka = (vsego - ponad_s - do_s) * 0.01;//50 - мед. страх.
+            podatok = vsego * 0.18;
+            zarp_sch = vsego - podatok - profspilka;
+
+
+
+            out_stream.open("oktyabr.txt");
+
+            out_stream << setw(43) << " Години " << setw(12) << " Сума " << endl;
+            out_stream << "Оплата почасовикiв: " << setw(20) << godyny << setw(16) << oplata_god << endl;
+            out_stream << "Процент за шкiдливi умови працi: " << setw(7) << godyny_schkid << setw(16) << procent_schkid << endl;
+            out_stream << "Разовi випл. за вислугу: " << setw(15) << godyny << setw(16) << vysluga << endl;
+            out_stream << "Премiя почасовикам: " << setw(20) << premiya_sch << setw(16) << premiya << endl;
+            out_stream << "Прямування вiд мiсця: " << setw(17) << pryam << setw(15) << doezd << endl;
+            out_stream << "Розїздні понад 12 год.: " << setw(14) << ponad << " днiв" << setw(9) << ponad_s << endl;
+            out_stream << "Розїздні до 12 год.:" << setw(18) << do_ << " днiв" << setw(11) << do_s << endl;
+            out_stream << "Профмайстерність:" << setw(27) <<  " 24 від." << setw(12) << prof_M << endl;
+            out_stream << "Вихід у вихідні:" << setw(23) << holiday << " годин" << setw(11) << holiday_sch << endl << endl;
+
+            out_stream << "ВСЁГО НАРАХОВАНО: " << vsego << endl << endl;
+
+
+            out_stream << "Вираховано: " << setw(42) << "Сума" << endl;
+            out_stream << "Податок 18%: " << setw(42) << podatok << endl;
+            out_stream << "Профспiлковий внесок: " << setw(33) << profspilka << endl;
+            out_stream << "Військовий збір:" << setw(39) << vijcoviy_zbir << endl;
+
+            out_stream << "ЗАРПЛАТА ДО СПЛАТИ: " << zarp_sch << endl << endl;
+
+            out_stream.close();
+
+            in_stream.open( "oktyabr.txt" );
+            in_stream.get( character );
+
+           while ( !in_stream.eof() )
+           {
+                cout << character;
+                in_stream.get(character);
+                }
+             in_stream.close();
+
+            }
+
+    else if (mesyac == 11)
+	{
+
+	//clrscr();
+		char character;
+        ifstream in_stream;
+        ofstream out_stream;
+
+        get_dimensions (chas, god, proc_prem, godyny, godyny_schkid, premiya_sch, pryam, ponad, do_, holiday);
+
+        if (god < 3)
+         god_  = god_1;
+            else if (god >= 3 && god < 5)
+             god_ = god_3;
+                else if (god >= 5 && god < 10)
+                 god_ = god_5;
+                    else if (god >= 10 && god < 15)
+                     god_ = god_10;
+                        else if (god >= 15 && god < 30)
+                         god_  = god_15;
+                            else if (god >= 30 && god < 40)
+                             god_ = god_30;
+
+            oplata_god = godyny * chas;
+            procent_schkid = chas * godyny_schkid * 0.12;
+            vysluga = chas * godyny * god_; //(год = 7%); (три = 10%);
+            //(пьять = 15%); (десять = 20%); (пьятнадцать = 25%);(30 = 30%);
+            doezd = chas * pryam;
+            ponad_s = ponad * 75;
+            do_s = do_ * 37.50;
+            holiday_sch = holiday * (chas * 2);
+            prof_M = oplata_god * 0.24;
+            premiya = (premiya_sch * chas) * (proc_prem / 100);
+            vsego = oplata_god + procent_schkid + vysluga + doezd + ponad_s + do_s + premiya  + prof_M + holiday_sch;
+
+            vijcoviy_zbir = vsego * 0.015;
+            profspilka = (vsego - ponad_s - do_s) * 0.01;//50 - мед. страх.
+            podatok = vsego * 0.18;
+            zarp_sch = vsego - podatok - profspilka;
+
+
+
+            out_stream.open("noyabr.txt");
+
+            out_stream << setw(43) << " Години " << setw(12) << " Сума " << endl;
+            out_stream << "Оплата почасовикiв: " << setw(20) << godyny << setw(16) << oplata_god << endl;
+            out_stream << "Процент за шкiдливi умови працi: " << setw(7) << godyny_schkid << setw(16) << procent_schkid << endl;
+            out_stream << "Разовi випл. за вислугу: " << setw(15) << godyny << setw(16) << vysluga << endl;
+            out_stream << "Премiя почасовикам: " << setw(20) << premiya_sch << setw(16) << premiya << endl;
+            out_stream << "Прямування вiд мiсця: " << setw(17) << pryam << setw(15) << doezd << endl;
+            out_stream << "Розїздні понад 12 год.: " << setw(14) << ponad << " днiв" << setw(9) << ponad_s << endl;
+            out_stream << "Розїздні до 12 год.:" << setw(18) << do_ << " днiв" << setw(11) << do_s << endl;
+            out_stream << "Профмайстерність:" << setw(27) <<  " 24 від." << setw(12) << prof_M << endl;
+            out_stream << "Вихід у вихідні:" << setw(23) << holiday << " годин" << setw(11) << holiday_sch << endl << endl;
+
+            out_stream << "ВСЁГО НАРАХОВАНО: " << vsego << endl << endl;
+
+
+            out_stream << "Вираховано: " << setw(42) << "Сума" << endl;
+            out_stream << "Податок 18%: " << setw(42) << podatok << endl;
+            out_stream << "Профспiлковий внесок: " << setw(33) << profspilka << endl;
+            out_stream << "Військовий збір:" << setw(39) << vijcoviy_zbir << endl;
+
+            out_stream << "ЗАРПЛАТА ДО СПЛАТИ: " << zarp_sch << endl << endl;
+
+            out_stream.close();
+
+            in_stream.open( "noyabr.txt" );
+            in_stream.get( character );
+
+           while ( !in_stream.eof() )
+           {
+                cout << character;
+                in_stream.get(character);
+                }
+             in_stream.close();
+
+            }
+
+    else if (mesyac == 12)
+	{
+
+	//clrscr();
+		char character;
+        ifstream in_stream;
+        ofstream out_stream;
+
+        get_dimensions (chas, god, proc_prem, godyny, godyny_schkid, premiya_sch, pryam, ponad, do_, holiday);
+
+        if (god < 3)
+         god_  = god_1;
+            else if (god >= 3 && god < 5)
+             god_ = god_3;
+                else if (god >= 5 && god < 10)
+                 god_ = god_5;
+                    else if (god >= 10 && god < 15)
+                     god_ = god_10;
+                        else if (god >= 15 && god < 30)
+                         god_  = god_15;
+                            else if (god >= 30 && god < 40)
+                             god_ = god_30;
+
+            oplata_god = godyny * chas;
+            procent_schkid = chas * godyny_schkid * 0.12;
+            vysluga = chas * godyny * god_; //(год = 7%); (три = 10%);
+            //(пьять = 15%); (десять = 20%); (пьятнадцать = 25%);(30 = 30%);
+            doezd = chas * pryam;
+            ponad_s = ponad * 75;
+            do_s = do_ * 37.50;
+            holiday_sch = holiday * (chas * 2);
+            prof_M = oplata_god * 0.24;
+            premiya = (premiya_sch * chas) * (proc_prem / 100);
+            vsego = oplata_god + procent_schkid + vysluga + doezd + ponad_s + do_s + premiya  + prof_M + holiday_sch;
+
+            vijcoviy_zbir = vsego * 0.015;
+            profspilka = (vsego - ponad_s - do_s) * 0.01;//50 - мед. страх.
+            podatok = vsego * 0.18;
+            zarp_sch = vsego - podatok - profspilka;
+
+
+
+            out_stream.open("dekabr.txt");
+
+            out_stream << setw(43) << " Години " << setw(12) << " Сума " << endl;
+            out_stream << "Оплата почасовикiв: " << setw(20) << godyny << setw(16) << oplata_god << endl;
+            out_stream << "Процент за шкiдливi умови працi: " << setw(7) << godyny_schkid << setw(16) << procent_schkid << endl;
+            out_stream << "Разовi випл. за вислугу: " << setw(15) << godyny << setw(16) << vysluga << endl;
+            out_stream << "Премiя почасовикам: " << setw(20) << premiya_sch << setw(16) << premiya << endl;
+            out_stream << "Прямування вiд мiсця: " << setw(17) << pryam << setw(15) << doezd << endl;
+            out_stream << "Розїздні понад 12 год.: " << setw(14) << ponad << " днiв" << setw(9) << ponad_s << endl;
+            out_stream << "Розїздні до 12 год.:" << setw(18) << do_ << " днiв" << setw(11) << do_s << endl;
+            out_stream << "Профмайстерність:" << setw(27) <<  " 24 від." << setw(12) << prof_M << endl;
+            out_stream << "Вихід у вихідні:" << setw(23) << holiday << " годин" << setw(11) << holiday_sch << endl << endl;
+
+            out_stream << "ВСЁГО НАРАХОВАНО: " << vsego << endl << endl;
+
+
+            out_stream << "Вираховано: " << setw(42) << "Сума" << endl;
+            out_stream << "Податок 18%: " << setw(42) << podatok << endl;
+            out_stream << "Профспiлковий внесок: " << setw(33) << profspilka << endl;
+            out_stream << "Військовий збір:" << setw(39) << vijcoviy_zbir << endl;
+
+            out_stream << "ЗАРПЛАТА ДО СПЛАТИ: " << zarp_sch << endl << endl;
+
+            out_stream.close();
+
+            in_stream.open( "dekabr.txt" );
+            in_stream.get( character );
+
+           while ( !in_stream.eof() )
+           {
+                cout << character;
+                in_stream.get(character);
+                }
+             in_stream.close();
+
+            }
+
+
+        else
+		cout << "не верный ввод";
+	}
+
+
+
+	else if (chislo == 2)
+	{
+		char character;
+		ifstream in_stream;
+
+		mesyac_ (mesyac);
+
+	 	if (mesyac == 1)
+	 	{
+			in_stream.open( "yanvar.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+
+	 	}
+
+		else if (mesyac == 2)
+	 	{
+			in_stream.open( "fevral.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+
+	 	}
+
+			else if (mesyac == 3)
+	 	{
+			in_stream.open( "mart.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+
+	 	}
+	 			else if (mesyac == 4)
+	 	{
+			in_stream.open( "aprel.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+
+	 	}
+	 			else if (mesyac == 5)
+	 	{
+			in_stream.open( "may.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+
+	 	}		else if (mesyac == 6)
+	 	{
+			in_stream.open( "iyun.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+
+	 	}
+	 			else if (mesyac == 7)
+	 	{
+			in_stream.open( "iyul.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+
+	 	}		else if (mesyac == 8)
+	 	{
+			in_stream.open( "avgust.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+
+	 	}
+	 			else if (mesyac == 9)
+	 	{
+			in_stream.open( "sentyabr.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+
+	 	}
+	 			else if (mesyac == 10)
+	 	{
+			in_stream.open( "oktyabr.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+
+	 	}
+	 			else if (mesyac == 11)
+	 	{
+			in_stream.open( "noyabr.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+
+	 	}
+	 				else if (mesyac == 12)
+	 	{
+			in_stream.open( "dekabr.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+
+	 	}
+	 	else
+	 		cout << "не правильний ввод";
+	}
+
+
+
+
+else if (chislo == 3)
+	{
+		char character;
+		ifstream in_stream;
+
+		cout << "yanvar" << endl;
+			in_stream.open( "yanvar.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+  	    cout << endl << endl;
+
+  	    cout << "fevral" << endl;
+			in_stream.open( "fevral.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+  	    cout << endl << endl;
+
+  	    cout << "mart" << endl;
+			in_stream.open( "mart.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+  	    cout << endl << endl;
+
+  	    cout << "aprel" << endl;
+			in_stream.open( "aprel.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+  	    cout << endl << endl;
+
+  	   cout << "may" << endl;
+			in_stream.open( "may.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+  	    cout << endl << endl;
+
+  	    cout << "iyun" << endl;
+			in_stream.open( "iyun.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+  	    cout << endl << endl;
+
+  	    cout << "iyul" << endl;
+			in_stream.open( "iyul.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+  	    cout << endl << endl;
+
+  	    cout << "avgust" << endl;
+			in_stream.open( "avgust.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+  	    cout << endl << endl;
+
+  	    cout << "sentyubr" << endl;
+			in_stream.open( "sentyabr.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+  	    cout << endl << endl;
+
+  	    cout << "oktyabr" << endl;
+			in_stream.open( "oktyabr.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+  	    cout << endl << endl;
+
+  	    cout << "noyabr" << endl;
+			in_stream.open( "noyabr.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+  	    cout << endl << endl;
+
+  	    cout << "dekabr" << endl;
+			in_stream.open( "dekabr.txt" );
+			in_stream.get( character );
+
+		   while ( !in_stream.eof() )
+ 		  {
+    		    cout << character;
+      		  in_stream.get(character);
+        }
+  	   in_stream.close();
+  	    cout << endl << endl;
+	}
+
+	else
+		cout << "не правильний ввод ! ";
+
+
+
+
+	system ("pause");
+
+	return 0;
+	}
+
+void mesyac_ (int& vvod)
+{
+	cout << "Введіть місяць: ";
+	cin >> vvod;
+	cout << "\n";
+}
+
+void get_dimensions(float& chas, int& god, float& proc_prem, int& godyny, int& godyny_schkid, int& premiya_sch, float& pryam, int& ponad, int& do_, int& holiday )
+{
+	cout << "Введiть ставку за день: ";
+	cin >> chas;
+	cout << "Введiть повну вислугу рокiв: ";
+	cin >> god;
+	cout << "Введiть вiдсоток премii: ";
+	cin >> proc_prem;
+	cout << "Введiть часи за оплату почасовикiв: ";
+	cin >> godyny;
+	cout << "Введiть часи за шкiдливi умов. працi: ";
+	cin >> godyny_schkid;
+	cout << "Введiть часи за прошлий мicяць: ";
+	cin >> premiya_sch;
+	cout << "Введiть часи за прямування вiд мiсця: ";
+	cin >> pryam;
+	cout << "Введить понад 12 год. (в днях): ";
+	cin >> ponad;
+	cout << "Введить дo 12 год. (в днях): ";
+	cin >> do_;
+	cout << "Скільки вихідних працював? В годинах: ";
+	cin >>holiday ;
+
+	cout << endl << endl;
+}
+
+/*void area (float chas, float vsego, float pryam, float premiya, float oplata_god, float procent_schkid, float vysluga, float doezd, float ponad_s, float do_s, float podatok15, float profspilka, float edyny_vnes, float zarp_sch, float proc_prem, int godyny, int godyny_schkid, int ponad, int do_, int premiya_sch, int god)
+{
+
+	oplata_god = godyny * chas;
+	 procent_schkid = chas * godyny_schkid * 0.12;
+	 vysluga = chas * godyny * god_; //(год = 7%); (три = 10%);
+	//(пьять = 15%); (десять = 20%); (пьятнадцать = 25%);(30 = 30%);
+	 doezd = chas * pryam;
+	 ponad_s = ponad * 30;
+	 do_s = do_ * 15;
+	 premiya = (premiya_sch * chas) * (proc_prem / 100);
+	 vsego = oplata_god + procent_schkid + vysluga + doezd + ponad_s + do_s + premiya + 50;
+
+	 edyny_vnes = (vsego - ponad_s - do_s) * 0.036;
+	 profspilka = (vsego - ponad_s - do_s - 50) * 0.01;//50 - мед. страх.
+	 podatok15 = (vsego - edyny_vnes) * 0.15;
+	 zarp_sch = vsego - podatok15 - profspilka - edyny_vnes - 100;
+
+	 return oplata_god, procent_schkid, vysluga, doezd, ponad_s, do_s, premiya, vsego, edyny_vnes, profspilka, podatok15, zarp_shc;
+}*/
