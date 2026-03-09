@@ -7,11 +7,9 @@
  Based in Ukraine  
 
 ##  Tech Stack
-- HTML 
-- CSS 
-- JavaScript 
+
 - Git 
-- React (learning)
+
 
 ##  Goals
 - Improve frontend skills
