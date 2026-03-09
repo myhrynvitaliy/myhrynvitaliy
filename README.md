@@ -12,9 +12,7 @@
 
 
 ##  Goals
-- Improve frontend skills
-- Build real projects
-- Grow as a developer
+
 
 ##  Contact
  Email: myhrynvitaliy@gmail.com  
